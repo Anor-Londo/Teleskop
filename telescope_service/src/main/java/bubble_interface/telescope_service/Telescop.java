@@ -1,9 +1,13 @@
 package bubble_interface.telescope_service;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Table(name = "telescop")
 public class Telescop {
 
     @Id
@@ -13,8 +17,13 @@ public class Telescop {
     @Column(name = "parameters")
     private String parameters;
 
-    @Column(name = "time")
-    private Date time;
+    @Column(name = "timeBegin")
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime timeBegin;
+
+    @Column(name = "timeEnd")
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime timeEnd;
 
     @Column(name = "coords")
     private String coords;
@@ -28,9 +37,10 @@ public class Telescop {
     public Telescop() {
     }
 
-    public Telescop(String parameters, Date time, String coords, boolean reserved, int telescopNumber) {
+    public Telescop(String parameters, LocalDateTime timeBegin, LocalDateTime timeEnd, String coords, boolean reserved, int telescopNumber) {
         this.parameters = parameters;
-        this.time = time;
+        this.timeEnd = timeEnd;
+        this.timeBegin = timeBegin;
         this.coords = coords;
         this.reserved = reserved;
         this.telescopNumber = telescopNumber;
@@ -52,13 +62,6 @@ public class Telescop {
         this.parameters = parameters;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
 
     public String getCoords() {
         return coords;
@@ -84,12 +87,29 @@ public class Telescop {
         this.telescopNumber = telescopNumber;
     }
 
+    public LocalDateTime getTimeBegin() {
+        return timeBegin;
+    }
+
+    public void setTimeBegin(LocalDateTime timeBegin) {
+        this.timeBegin = timeBegin;
+    }
+
+    public LocalDateTime getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(LocalDateTime timeEnd) {
+        this.timeEnd = timeEnd;
+    }
+
     @Override
     public String toString() {
         return "Telescop{" +
                 "id=" + id +
                 ", parameters='" + parameters + '\'' +
-                ", time=" + time +
+                ", timeEnd=" + timeEnd +
+                ", timeBegin=" + timeBegin +
                 ", coords='" + coords + '\'' +
                 ", reserved=" + reserved +
                 ", telescopNumber=" + telescopNumber +
