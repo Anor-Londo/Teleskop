@@ -3,6 +3,7 @@ package com.bubbleinterface.ppmtool.web;
 import com.bubbleinterface.ppmtool.domain.User;
 import com.bubbleinterface.ppmtool.payload.JWTLoginSucessResponse;
 import com.bubbleinterface.ppmtool.payload.LoginRequest;
+import com.bubbleinterface.ppmtool.repository.UserRepository;
 import com.bubbleinterface.ppmtool.security.JwtTokenProvider;
 import com.bubbleinterface.ppmtool.services.MapValidationErrorService;
 import com.bubbleinterface.ppmtool.services.UserService;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.Optional;
+
 import static com.bubbleinterface.ppmtool.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
@@ -33,6 +36,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private UserValidator userValidator;
 
     @Autowired
@@ -41,6 +47,12 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
+
+    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+    public Optional<User> findGuestById(@PathVariable Long id) {
+        return userRepository.findById(id);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){

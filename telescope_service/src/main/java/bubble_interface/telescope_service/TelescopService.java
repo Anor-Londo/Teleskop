@@ -9,4 +9,6 @@ public interface TelescopService {
     List<Telescop> findTelescopByCoords(String coords);
     List<Telescop> findTelescopByBeginDate(LocalDateTime date);
     List<Telescop> findTelescopByEndDate(LocalDateTime date);
+    Telescop saveOrUpdateTelescop(Telescop telescop);
+    void deleteTelescopByIdentifier(Integer id);
 }

@@ -67,4 +67,15 @@ public class TelescopServiceImpl implements TelescopService {
         }
         return telescopsFound;
     }
+
+    @Override
+    public Telescop saveOrUpdateTelescop(Telescop telescop) {
+        return repository.save(telescop);
+    }
+
+    @Override
+    public void deleteTelescopByIdentifier(Integer id) {
+        Telescop telescop = repository.findByid(id);
+        repository.delete(telescop);
+    }
 }

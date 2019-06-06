@@ -1,37 +1,15 @@
-package bubble_interface.telescope_service;
+package com.microservices.booking.bookingservice;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity
-@Table(name = "telescop")
 public class Telescop {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @Column(name = "parameters")
     private String parameters;
-
-    @Column(name = "timeBegin")
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime timeBegin;
-
-    @Column(name = "timeEnd")
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime timeEnd;
-
-    @Column(name = "coords")
     private String coords;
-
-    @Column(name = "reserved")
     private boolean reserved;
-
-    @Column(name = "telescop_number")
     private int telescopNumber;
 
     public Telescop() {
@@ -102,18 +80,5 @@ public class Telescop {
 
     public void setTimeEnd(LocalDateTime timeEnd) {
         this.timeEnd = timeEnd;
-    }
-
-    @Override
-    public String toString() {
-        return "Telescop{" +
-                "id=" + id +
-                ", parameters='" + parameters + '\'' +
-                ", timeEnd=" + timeEnd +
-                ", timeBegin=" + timeBegin +
-                ", coords='" + coords + '\'' +
-                ", reserved=" + reserved +
-                ", telescopNumber=" + telescopNumber +
-                '}';
     }
 }

@@ -1,16 +1,15 @@
 package bubble_interface.telescope_service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Timestamp;
-import java.text.SimpleDateFormat;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +25,12 @@ public class TelescopController {
     @RequestMapping(value = "telescop", method = RequestMethod.GET)
     public Iterable<Telescop> retrieveAllTelescops(){
         return repository.findAll();
+    }
+
+
+    @RequestMapping(value = "telescop/{id}", method = RequestMethod.GET)
+    public Telescop retrieveTelescopById(@PathVariable Integer id){
+        return repository.findByid(id);
     }
 
     @RequestMapping(value = "telescop/coords/{coords}", method = RequestMethod.GET)
@@ -49,5 +54,24 @@ public class TelescopController {
         List<Telescop> telescops = service.findTelescopByEndDate(time);
         return telescops;
     }
+
+
+    @PostMapping("telescop/create")
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Telescop telescop, BindingResult result){
+        if (result.hasErrors()){
+            return new ResponseEntity<String>("Invalid object", HttpStatus.BAD_REQUEST);
+        }
+        Telescop telescop1 = service.saveOrUpdateTelescop(telescop);
+        return new ResponseEntity<Telescop>(telescop, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("telescop/delete/{telescopId}")
+    public ResponseEntity<?> deleteProject(@PathVariable Integer telescopId){
+        service.deleteTelescopByIdentifier(telescopId);
+
+        return new ResponseEntity<String>("Telescop with ID: '" + telescopId
+                + "' was deleted", HttpStatus.OK);
+    }
+
 
 }

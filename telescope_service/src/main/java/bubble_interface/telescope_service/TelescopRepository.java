@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TelescopRepository extends CrudRepository<Telescop, Integer> {
+    Telescop findByid(Integer Id);
 }
